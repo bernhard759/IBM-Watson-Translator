@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" type="image/x-icon" href="favicon1.ico" />
+    <title>Translator</title>
+</head>
+
+<body>
+
+    <!--axios-->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <script>
+
+        // translate function
+        const translateIt = () => {
+            document.getElementById("translated").hidden = true;
+            document.getElementById("waiting").hidden = false;
+            let textToTranslate = document.getElementById("textToTranslate").value;
+            // get request
+            axios.get("../translate?textToTranslate=" + textToTranslate)
+                .then(response => {
+                    document.getElementById("waiting").hidden = true;
+                    document.getElementById("translated").hidden = false;
+                    document.getElementById("translated").innerText = response.data;
+                })
+        }
+
+        // event listener
+        document.addEventListener("DOMContentLoaded", function () {
+            document.getElementById("textToTranslate").addEventListener('keyup', function (e) {
+                if (e.keyCode === 13) {
+                    // call translate function
+                    translateIt();
+                    console.log("action")
+                } else {
+                    console.log("no action")
+                }
+            })
+        });
+
+    </script>
+
+    <div class="maindiv">
+
+        <div>
+            <center>
+                <img src=https://www.ibm.com/watson/assets-watson/images/language-translator/language_translation.svg>
+            </center>
+        </div>
+        <h1>IBM Watson Translator</h1>
+
+        <div>
+            <input id="textToTranslate" type="text">
+        </div>
+
+        <div>
+            <button onClick="translateIt()" type="button" class="btn" style="font-size: 18px;">Translate</button>
+            <span hidden="true" id="waiting" style="font-size: 18px; margin-left:10px;">Loading...</span><br />
+        </div>
+
+        <div class="result">
+            <span hidden="true" id="translated" style="font-size: 20px; color:steelblue"></span>
+        </div>
+
+
+    </div>
+
+</body>
+
+</html>
