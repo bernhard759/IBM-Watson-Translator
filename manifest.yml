@@ -1,0 +1,5 @@
+---
+applications:
+ - name: watson-translator-65e
+   random-route: false
+   memory: 128M
